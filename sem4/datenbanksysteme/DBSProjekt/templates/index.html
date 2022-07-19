@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% block content %}
+<div class="buttons">
+  <form action="/" method="post">
+    <button name="clear" type="submit">clear</button>
+  </form>
+  <form action="/tables_joined/" method="post">
+    <button name="allTablesJoined" type="submit">all tables joined</button>
+  </form>
+  <form action="/table_article/" method="post">
+    <button name="table_article" type="submit">table article</button>
+  </form>
+  <form action="/table_author/" method="post">
+    <button name="table_author" type="submit">table author</button>
+  </form>
+  <form action="/table_journal/" method="post">
+    <button name="table_journal" type="submit">table journal</button>
+  </form>
+  <form action="/article_journal_rank/" method="post">
+    <button name="article_journal_rank" type="submit">
+      article published by journal and its rank
+    </button>
+  </form>
+  <form action="/article_year/" method="post">
+    Which article was written this year:
+    <input type="text" name="article_year" type="submit" />
+  </form>
+  <form action="/article_what/" method="post">
+    What article you searching for:
+    <input type="text" name="article_what" type="submit" />
+  </form>
+  <form action="/journal_what/" method="post">
+    What journal you searching for:
+    <input type="text" name="journal_what" type="submit" />
+  </form>
+  <form action="/journal_rank_from_then/" method="post">
+    Search for Journal rank from
+    <input type="text" name="journal_rank_from"/>
+    until Journal rank
+    <input type="text" name="journal_rank_then"/>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<h1>{% block title %} Tables {% endblock %}</h1>
+
+{% if data != [] %}
+<table>
+  <thead>
+    <tr>
+      {% for i in range(0, (data[0][0]|length)) %}
+      <th>
+        {{ data[i+1] }}
+        <form action="" method="POST">
+          <button name="filterby asc" type="submit" value="{{ data[i+1] }}">
+            filter by asc
+          </button>
+        </form>
+        <form action="" method="POST">
+          <button name="filterby dsc" type="submit" value="{{ data[i+1] }}">
+            filter by dsc
+          </button>
+        </form>
+      </th>
+
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in data[0] %}
+    <tr>
+      {% for object in row %}
+      <td>{{object}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %} {% endblock %}
